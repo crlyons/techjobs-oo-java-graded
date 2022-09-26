@@ -93,4 +93,38 @@ public class Job {
     public int getId() {
         return id;
     }
+
+    @Override
+    public String toString(){
+        String dNA = "Data not available";
+
+        if(name.isEmpty() && employer.toString().isEmpty() && location.toString().isEmpty() && positionType.toString().isEmpty() && coreCompetency.toString().isEmpty()){
+            return "OOPS! This job does not seem to exist.";
+        } else
+        {
+            if (name.isEmpty()) {
+                setName(dNA);
+            }
+            if (employer.toString().isEmpty()) {
+                employer.setValue(dNA);
+            }
+            if (location.toString().isEmpty()) {
+                location.setValue(dNA);
+            }
+            if (positionType.toString().isEmpty()) {
+                positionType.setValue(dNA);
+            }
+            if (coreCompetency.toString().isEmpty()) {
+                coreCompetency.setValue(dNA);
+            }
+
+            return "\n" +
+                    "ID: " + id + "\n" +
+                    "Name: " + name + "\n" +
+                    "Employer: " + employer + "\n" +
+                    "Location: " + location + "\n" +
+                    "Position Type: " + positionType + "\n" +
+                    "Core Competency: " + coreCompetency + "\n";
+        }
+    }
 }

@@ -48,9 +48,56 @@ public class JobTest {
 
     @Test
     public void testToStringStartsAndEndsWithNewLine(){
+        //this is actually gonna be a formatted version of the job object
         Job thatJob = new Job("Product tester", new Employer("ACME"), new Location("Desert"), new PositionType("Quality control"), new CoreCompetency("Persistence"));
+        String jobString = thatJob.toString();
+        assertEquals('\n', jobString.charAt(0));
+        assertEquals('\n', jobString.charAt(jobString.length()-1));
+    }
 
+    @Test
+    public void testToStringContainsCorrectLabelsAndData(){
+        Job thatJob = new Job("Product tester", new Employer("ACME"), new Location("Desert"), new PositionType("Quality control"), new CoreCompetency("Persistence"));
+        String correctString =
+                "\n" +
+                "ID: " + thatJob.getId() + "\n" +
+                "Name: " + thatJob.getName()  + "\n" +
+                "Employer: " + thatJob.getEmployer()  + "\n" +
+                "Location: " + thatJob.getLocation() + "\n" +
+                "Position Type: " + thatJob.getPositionType()  + "\n" +
+                "Core Competency: " + thatJob.getCoreCompetency()  + "\n";
+        assertEquals(thatJob.toString(), correctString);
 
-        assertEquals();
+    }
+
+    @Test
+    public void testToStringHandlesEmptyField(){
+        Job thisJob = new Job("", new Employer(""), new Location(""), new PositionType(""), new CoreCompetency(""));
+        assertEquals(thisJob.toString(), "OOPS! This job does not seem to exist.");
+
+        Job thatJob = new Job("", new Employer("ACME"), new Location(""), new PositionType(""), new CoreCompetency(""));
+        String expectedString =
+                "\n" +
+                        "ID: " + thatJob.getId() + "\n" +
+                        "Name: " + "Data not available"  + "\n" +
+                        "Employer: " + thatJob.getEmployer()  + "\n" +
+                        "Location: " + "Data not available" + "\n" +
+                        "Position Type: " + "Data not available"  + "\n" +
+                        "Core Competency: " + "Data not available"  + "\n";
+        assertEquals(thatJob.toString(), expectedString);
+
+        Job theOtherJob = new Job("Product tester", new Employer(""), new Location(""), new PositionType(""), new CoreCompetency(""));
+        String predictedString =
+                "\n" +
+                        "ID: " + theOtherJob.getId() + "\n" +
+                        "Name: " + theOtherJob.getName()  + "\n" +
+                        "Employer: " + "Data not available"  + "\n" +
+                        "Location: " + "Data not available" + "\n" +
+                        "Position Type: " + "Data not available"  + "\n" +
+                        "Core Competency: " + "Data not available"  + "\n";
+        assertEquals(theOtherJob.toString(), predictedString);
+
     }
 }
+
+
