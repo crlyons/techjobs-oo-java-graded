@@ -97,27 +97,19 @@ public class Job {
     @Override
     public String toString(){
         String dNA = "Data not available";
+        ArrayList<JobField> fields = new ArrayList<JobField>(Arrays.asList(employer, location, positionType, coreCompetency));
 
-        if(name.isEmpty() && employer.toString().isEmpty() && location.toString().isEmpty() && positionType.toString().isEmpty() && coreCompetency.toString().isEmpty()){
+        if(name.isEmpty() && fields.stream().allMatch(field -> field.toString().isEmpty())){
             return "OOPS! This job does not seem to exist.";
         } else
-        {
-            if (name.isEmpty()) {
-                setName(dNA);
+        {if (name.isEmpty()) {
+            setName(dNA);
+        }
+        for ( JobField field: fields) {
+            if (field.toString().isEmpty()) {
+                field.setValue(dNA);
             }
-            if (employer.toString().isEmpty()) {
-                employer.setValue(dNA);
-            }
-            if (location.toString().isEmpty()) {
-                location.setValue(dNA);
-            }
-            if (positionType.toString().isEmpty()) {
-                positionType.setValue(dNA);
-            }
-            if (coreCompetency.toString().isEmpty()) {
-                coreCompetency.setValue(dNA);
-            }
-
+        }
             return "\n" +
                     "ID: " + id + "\n" +
                     "Name: " + name + "\n" +
